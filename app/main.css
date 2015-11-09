@@ -1,0 +1,8 @@
+.breadcrumb > li + li:before {
+  color: #999;
+  content: "→";
+}
+
+.jumbotron {
+  margin-top: 20px;
+}
