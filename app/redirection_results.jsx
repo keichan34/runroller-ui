@@ -33,7 +33,9 @@ class RedirectionResults extends React.Component {
       <div className="col-sm-12" key={i}>
         <ol className="breadcrumb">
           {redirectPathItems}
-          <li>{datum.unrolled_uri}</li>
+          <li>
+            <a href={datum.unrolled_uri}>{datum.unrolled_uri}</a>
+          </li>
         </ol>
       </div>
     )

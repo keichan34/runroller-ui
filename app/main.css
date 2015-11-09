@@ -1,6 +1,6 @@
 .breadcrumb > li + li:before {
   color: #999;
-  content: "→";
+  content: "\2192";
 }
 
 .jumbotron {
