@@ -7,14 +7,22 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      data: []
+      dataOrder: [],
+      data: {}
     }
   }
 
   handleIncomingData(kind, data) {
-    this.setState(React.addons.update(this.state, {
-      data: {$push: [data]}
-    }))
+    var updateHash = {}
+
+    if (this.state.dataOrder.indexOf(data.guid) === -1) {
+      updateHash["dataOrder"] = {$push: [data.guid]}
+    }
+
+    updateHash["data"] = {}
+    updateHash["data"][data.guid] = {$set: data}
+
+    this.setState(React.addons.update(this.state, updateHash))
   }
 
   render() {
@@ -31,13 +39,16 @@ class App extends React.Component {
               </p>
               <Form
                 onSuccess={this.handleIncomingData.bind(this, 'success')}
-                onError={this.handleIncomingData.bind(this, 'error')} />
+                onError={this.handleIncomingData.bind(this, 'error')}
+                onStart={this.handleIncomingData.bind(this, 'start')} />
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <RedirectionResults data={this.state.data} />
+            <RedirectionResults
+              data={this.state.data}
+              dataOrder={this.state.dataOrder} />
           </div>
         </div>
         <div className="row">

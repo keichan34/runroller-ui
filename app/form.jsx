@@ -24,12 +24,20 @@ class Form extends React.Component {
   }
 
   sendRequest(url) {
-    var that = this
+    var that = this,
+        guid = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
+
+    that.props.onStart({
+      guid: guid,
+      uri: url
+    })
+
     var request = new XMLHttpRequest();
     request.open('GET', 'https://unroll.kbys.me/unroll?uri=' + encodeURIComponent(url), true);
 
     request.onload = function() {
       var data = JSON.parse(request.responseText);
+      data.guid = guid
       if (request.status >= 200 && request.status < 400) {
         // Success!
         that.props.onSuccess(data)

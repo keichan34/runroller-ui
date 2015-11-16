@@ -41,14 +41,28 @@ class RedirectionResults extends React.Component {
     )
   }
 
+  renderPending(i, datum) {
+    return (
+      <div className="col-sm-12" key={i}>
+        <ol className="breadcrumb">
+          <li>
+            {datum.uri}
+          </li>
+        </ol>
+      </div>
+    )
+  }
+
   render() {
     var rows = [],
         datum
 
-    for (var i = this.props.data.length - 1; i >= 0; i--) {
-      datum = this.props.data[i]
+    for (var i = this.props.dataOrder.length - 1; i >= 0; i--) {
+      datum = this.props.data[this.props.dataOrder[i]]
 
-      if (datum.error == true) {
+      if (datum.error === undefined) {
+        rows.push(this.renderPending(i, datum))
+      } else if (datum.error === true) {
         rows.push(this.renderError(i, datum))
       } else {
         rows.push(this.renderSuccess(i, datum))
